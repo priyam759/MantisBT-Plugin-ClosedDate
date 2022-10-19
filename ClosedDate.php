@@ -8,11 +8,12 @@ class ClosedDatePluginColumn extends MantisColumn
 	public $column = "col";
 	public $sortable = false;
 	public function display( $p_bug, $p_columns_target ){
-		echo db_query("SELECT CASE
-	WHEN bughistory.[field_name] = 'status' AND bughistory.[new_value] = '90' THEN bug_history.[date_modified]
+	echo db_query(
+	"SELECT CASE
+	WHEN bughistory.[field_name] = 'status' AND bughistory.[new_value] = '90' THEN CONVERT(DATETIME2(0),DATEADD(SECOND, bughistory.[date_modified], '19700101'))
 	ELSE NULL
-	END AS 'date_closed' FROM mantis_bug_history_table bughistory WHERE bughistory.[bug_id]={$p_bug->id}")->fields["date_closed"];
-	}
+	END AS 'date_closed' FROM mantis_bug_history_table bughistory WHERE bug_id={$p_bug->id}")->fields['date_closed'];
+}
 
 class ClosedDatePlugin extends MantisPlugin {
 

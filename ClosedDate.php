@@ -20,7 +20,11 @@ class ClosedDatePluginColumn extends MantisColumn
 			
 		$row = db_fetch_array($date);
 	    $string = $row['date_closed'];
-		echo $string;
+		if (!empty($string))
+		{
+			$date = strtotime($string);
+			echo date('Y-m-d H:i', $date);
+		}
 		
 	}
 }

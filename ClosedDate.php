@@ -16,7 +16,11 @@ class ClosedDatePluginColumn extends MantisColumn
 			WHEN bughistory.[field_name] = 'status' AND bughistory.[new_value] = '90' 
 			THEN DATEADD(SECOND, bughistory.[date_modified], '19700101') ELSE null
 			END AS 'date_closed' FROM mantis_bug_history_table bughistory WHERE bug_id={$p_bug->id}");
-		echo $date;
+			
+		while($row = db_fetch_array($date)){
+			$string = $row['date_closed'];
+			echo $string;
+		}
 	}
 }
 

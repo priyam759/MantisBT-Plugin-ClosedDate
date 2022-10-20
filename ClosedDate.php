@@ -13,9 +13,10 @@ class ClosedDatePluginColumn extends MantisColumn
 	public function display( $p_bug, $p_columns_target )
 	{
 		$date = db_query("SELECT CASE
-			WHEN bughistory.[field_name] = 'status' AND bughistory.[new_value] = '90' 
+			WHEN bughistory.[field_name] = 'status' AND bughistory.[new_value] = '90' AND bugtable.[status] = '90'
 			THEN DATEADD(SECOND, bughistory.[date_modified], '19700101') ELSE null
-			END AS 'date_closed' FROM mantis_bug_history_table bughistory WHERE bug_id={$p_bug->id}");
+			END AS 'date_closed' FROM mantis_bug_history_table bughistory LEFT JOIN mantis_bug_table bugtable ON bughistory.bug_id = bugtable.id
+			WHERE bug_id={$p_bug->id}");
 			
 		while($row = db_fetch_array($date)){
 			$string = $row['date_closed'];

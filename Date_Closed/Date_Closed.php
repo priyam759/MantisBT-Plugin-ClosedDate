@@ -8,7 +8,7 @@ require_once( 'core/columns_api.php' );
 class Date_ClosedColumn extends MantisColumn
 {
 	public $title = "Closed";
-	//public $column = "column";
+	public $column = "col";
 	public $sortable = false;
 	public function display( $p_bug, $p_columns_target )
 	{
